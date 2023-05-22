@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>question1</title>
+</head>
+<body>
+    <form id="form">
+        <label for="">Entry</label>
+        <input type="text" id="textField"><br>
+        <br>
+        <button type="button" id="addEntryButton">Add Entry</button>
+        <button type="button" id="summaryButton">Summary</button>
+      </form>
+      <ul id="entries">Entries</ul>
+      <div id="summary">Summary</div>
+</body>
+<script>
+
+    // Define a form with a textfield and two buttons
+    var form = document.getElementById("form");
+    var textField = document.getElementById("textField");
+    var addEntryButton = document.getElementById("addEntryButton");
+    var summaryButton = document.getElementById("summaryButton");
+
+    // Add an event listener to the AddEntry button
+    addEntryButton.addEventListener("click", addEntry);
+
+    // Add an event listener to the Summary button
+    summaryButton.addEventListener("click", summary);
+
+    // Define a function to add an entry
+    function addEntry() {
+    // Get the entry from the textfield
+    var entry = textField.value;
+
+    // Validate the entry
+    if (entry === "") {
+
+        alert("Invalid entry");
+
+        return;
+   }
+
+    // Split the entry into its components
+    var components = entry.split(",");
+
+    // Check if all the components are present
+    if (components.length !== 3) {
+        alert("Invalid entry");
+        return;
+   }
+
+     // Add the entry to the list of entries
+    var entries = document.getElementById("entries");
+    var entryNode = document.createElement("li");
+    entryNode.textContent = components.join(" ");
+    entries.appendChild(entryNode);
+}
+
+
+// Define a function to display the summary
+ function summary() {
+
+    // Get the entries from the DOM
+    var entries = document.getElementById("entries").childNodes;
+
+  // Sort the entries by duration
+    entries.sort(function(a, b) {
+    return parseInt(a.textContent.split(" ")[2]) - parseInt(b.textContent.split(" ")[2]);
+  });
+
+  // Display the summary
+    var summaryNode = document.getElementById("summary");
+    summaryNode.textContent = entries.length + " entries submitted.\n";
+    for (var i = 0; i < entries.length; i++) {
+    summaryNode.textContent += entries[i].textContent + "\n";
+  }
+}
+
+</script>
+</html>
